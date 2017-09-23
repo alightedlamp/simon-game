@@ -1,0 +1,68 @@
+* {
+  box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  font-family: 'Roboto', sans-serif; }
+
+p {
+  margin: .75em 0; }
+
+div.app {
+  margin: 3em auto 0 auto;
+  width: 400px; }
+
+div.grid {
+  display: flex;
+  flex-wrap: wrap;
+  box-shadow: 7px 7px 0 #ccc; }
+
+div.cell {
+  width: 50%;
+  height: 200px;
+  margin: 0;
+  padding: 0; }
+
+div.cell#red {
+  background-color: red; }
+
+div.cell#blue {
+  background-color: blue; }
+
+div.cell#green {
+  background-color: green; }
+
+div.cell#yellow {
+  background-color: yellow; }
+
+div.header {
+  width: 200px;
+  padding-bottom: 1.5em;
+  border-bottom: 5px double #ccc; }
+
+div.instructions {
+  margin: 1.5em 0; }
+
+div.controls {
+  display: flex;
+  margin: 1.5em 0 3em 0;
+  background-color: white;
+  box-shadow: 4px 4px 0 #eee; }
+
+div.controls button {
+  height: 60px;
+  font-size: 1.25em;
+  padding: 1em;
+  margin: 1em;
+  border: 0;
+  background-color: #eee; }
+
+div.controls button:hover {
+  background-color: #999;
+  transition: .2s;
+  color: white; }
+
+/*# sourceMappingURL=styles.css.map */
