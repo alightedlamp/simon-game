@@ -1,9 +1,12 @@
+/*jshint esversion: 6 */
+
 let currentGame;
 let strict = false;
 let gameOn = false;
 let maxLength = 20;
 
 const infoBar = document.querySelector("#info");
+infoBar.innerHTML = 'Press start below, and pay close attention! Especially as the game speeds up.';
 
 const red = document.querySelector("#red");
 const blue = document.querySelector("#blue");
@@ -25,15 +28,15 @@ const Game = function() {
     patternLength: 1,
     attempts: 0,
     speed: 1
-  }
-}
+  };
+};
 Game.prototype.incrementPattern = function(){
   this.game.patternLength += 1;
 };
 Game.prototype.addToPattern = function(length) {
   const cellIdx = Math.floor(Math.random() * 4);
   this.game.currentPattern.push(cellIdx);
-}
+};
 Game.prototype.displayPattern = function(pattern) {
   console.log(`Displaying: ${pattern}`);
   setTimeout(() => {
@@ -44,13 +47,13 @@ Game.prototype.displayPattern = function(pattern) {
       setTimeout(() => {
         cell.el.style.backgroundColor = cell.baseColor;
       }, 1000 / this.game.speed);
-    }
+    };
 
     const next = () => {
       const cell = grid[this.game.currentPattern[idx]];
       highlight(cell);
       idx++;
-    }
+    };
     next();
 
     const highlighter = setInterval(function () {
@@ -61,7 +64,7 @@ Game.prototype.displayPattern = function(pattern) {
       next();
     }.bind(this), 1500 / this.game.speed);
   }, 1000);
-}
+};
 Game.prototype.resetTurn = function(){
   this.game.selectedPattern = [];
   this.game.patternLength += 1;
@@ -69,16 +72,16 @@ Game.prototype.resetTurn = function(){
 Game.prototype.takeTurn = function() {
   this.addToPattern(this.game.patternLength);
   this.displayPattern(this.game.currentPattern);
-}
+};
 Game.prototype.addUserSelection = function(e) {
   this.game.selectedPattern.push(e.target.id); // ex: 'green'
   if (this.game.selectedPattern.length === this.game.currentPattern.length) {
     this.checkAnswer();
   }
-}
+};
 Game.prototype.checkAnswer = function() {
   const winner = this.game.selectedPattern.filter((color, i) => {
-    return color === grid[this.game.currentPattern[i]].color
+    return color === grid[this.game.currentPattern[i]].color;
   }).length === this.game.currentPattern.length;
 
   if (!winner && this.game.attempts !== 3) {
@@ -104,22 +107,23 @@ Game.prototype.checkAnswer = function() {
     this.resetTurn();
     this.takeTurn();
   }
-}
+};
 Game.prototype.start = function() {
   this.displayInfo('START');
   this.game.started = true;
   this.takeTurn();
-}
+};
 Game.prototype.reset = function() {
   this.displayInfo('RESET');
   this.game.started = false;
-}
+};
 Game.prototype.clearInfo = function() {
   infoBar.innerHTML = '';
-}
+};
 Game.prototype.displayInfo = function(action) {
-  infoBar.style.display = 'block';
   switch (action) {
+    case ('INIT'):
+      infoBar.innerHTML = 'Press start below, and pay close attention! Especially as the game speeds up.';
     case ('START'):
       infoBar.innerHTML = 'Starting game';
       break;
@@ -141,10 +145,10 @@ Game.prototype.displayInfo = function(action) {
     default:
       break;
   }
-}
+};
 Game.prototype.toggleStrict = function(game) {
   this.game.settings.strict = true;
-}
+};
 
 const resetText = 'Reset';
 const startText = 'Let\'s go!';
@@ -167,9 +171,7 @@ toggleStrictBtn.addEventListener('click', () => {
   strict = !strict;
   indicator.style.backgroundColor = strict ? 'red' : 'white';
 });
+
 for (let i = 0; i < grid.length; i++) {
-  grid[i].el.addEventListener('click', (e) => {
-    // Change style on click? Trigger animation?
-    currentGame.addUserSelection(e)
-  });
+  grid[i].el.addEventListener('click', (e) => currentGame.addUserSelection(e));
 }
