@@ -6,25 +6,27 @@
     </head>
     <body>
       <div class="app">
+        <div class="header">
+          <h1>Simon</h1>
+          <p>The classic memory game.</p>
+        </div>
+        <div id="instructions">
+          <p>Press start below, and pay close attention! Especially as the game speeds up.</p>
+        </div>
+        <div id="controls">
+          <button id="newGame">Let's go!</button>
+          <div class="strict">
+            <button id="toggleStrict">Strict</button>
+            <div id="indicator"></div>
+          </div>
+        </div>
         <div class="grid">
           <div class="cell" id="red"></div>
           <div class="cell" id="blue"></div>
           <div class="cell" id="green"></div>
           <div class="cell" id="yellow"></div>
         </div>
-        <div class="header">
-          <h1>Simon</h1>
-          <p>The classic memory game.</p>
-        </div>
-        <div class="instructions">
-          <p>Press start below, and pay close attention! Especially as the game speeds up.</p>
-        </div>
-        <div class="controls">
-          <button id="newGame">Let's go!</button>
-          <div class="strict">
-            <button id="toggleStrict">Strict</button>
-            <div id="indicator"></div>
-          </div>
+        <div id="info">
         </div>
       </div>
     </body>
