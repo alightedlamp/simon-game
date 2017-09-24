@@ -3,7 +3,8 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     concat = require('gulp-concat'),
     sass = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    ghPages = require('gulp-gh-pages');
 
 gulp.task('default',  ['watch']);
 
@@ -39,4 +40,9 @@ gulp.task('watch', function() {
   gulp.watch('src/js/**/*.js', ['jshint', 'build-js']);
   gulp.watch('src/scss/**/*.scss', ['build-css']);
   gulp.watch('src/*.html', ['copy-html']);
+});
+
+gulp.task('deploy', function() {
+  return gulp.src('./public/**/*')
+    .pipe(ghPages());
 });

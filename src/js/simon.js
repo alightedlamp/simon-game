@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/* jshint esversion: 6 */
 
 let currentGame;
 let strict = false;
@@ -20,18 +20,8 @@ const grid = [
   {cell: 3, color: 'yellow', baseColor: '#d3a202', highlightColor: '#ffe100', el: yellow}
 ];
 
-const defaultGame = {
-  strict: strict,
-  currentPattern: [],
-  selectedPattern: [],
-  maxLength: maxLength,
-  patternLength: 1,
-  attempts: 0,
-  speed: 1
-}
-
 const Game = function() {
-  this.game = {...defaultGame};
+  this.game = this.newGame();
 };
 Game.prototype.incrementPattern = function(){
   this.game.patternLength += 1;
@@ -113,11 +103,32 @@ Game.prototype.checkAnswer = function() {
     this.takeTurn();
   }
 };
+Game.prototype.newGame = function() {
+  return {
+    strict: strict,
+    currentPattern: [],
+    selectedPattern: [],
+    maxLength: maxLength,
+    patternLength: 1,
+    attempts: 0,
+    speed: 1
+  }
+};
 Game.prototype.start = function() {
+  this.newGame();
   this.takeTurn();
 };
 Game.prototype.reset = function() {
-  this.game = {...defaultGame};
+  this.game = {
+    strict: strict,
+    currentPattern: [],
+    selectedPattern: [],
+    maxLength: maxLength,
+    patternLength: 1,
+    attempts: 0,
+    speed: 1
+  }
+  this.displayInfo();
 };
 Game.prototype.displayInfo = function(action) {
   const steps = this.game.currentPattern.length;
@@ -147,7 +158,7 @@ toggleStrictBtn.addEventListener('click', () => {
 });
 
 for (let i = 0; i < grid.length; i++) {
-  grid[i].el.addEventListener('click', (e) => {
-    currentGame.addUserSelection(e)
-  });
+  grid[i].el.addEventListener('click', (e) => currentGame.addUserSelection(e));
+  grid[i].el.addEventListener('mousedown', (e) => e.target.style.backgroundColor = grid[i].highlightColor);
+  grid[i].el.addEventListener('mouseup', (e) => e.target.style.backgroundColor = grid[i].baseColor);
 }

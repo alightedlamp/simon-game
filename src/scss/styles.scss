@@ -3,6 +3,11 @@ $blue: #1d1d8c;
 $green: #2a912b;
 $yellow: #d3a202;
 
+$redHL: #e01818;
+$blueHL: #005dff;
+$greenHL: #23dd16;
+$yellowHL: #ffe100;
+
 * {
   box-sizing: border-box;
 }
@@ -56,9 +61,12 @@ div.cell#yellow {
   background-color: $yellow;
 }
 div.cell:active {
-  transform: translateY(7px) translateX(7px);
-  transition: .1s;
+  opacity: .7;
 }
+// div.cell:active {
+//   transform: translateY(7px) translateX(7px);
+//   transition: .1s;
+// }
 div.header {
   width: 200px;
   padding-bottom: 1.5em;
