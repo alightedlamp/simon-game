@@ -60,13 +60,6 @@ div.cell#green {
 div.cell#yellow {
   background-color: $yellow;
 }
-div.cell:active {
-  opacity: .7;
-}
-// div.cell:active {
-//   transform: translateY(7px) translateX(7px);
-//   transition: .1s;
-// }
 div.header {
   width: 200px;
   padding-bottom: 1.5em;

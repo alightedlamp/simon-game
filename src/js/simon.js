@@ -119,15 +119,7 @@ Game.prototype.start = function() {
   this.takeTurn();
 };
 Game.prototype.reset = function() {
-  this.game = {
-    strict: strict,
-    currentPattern: [],
-    selectedPattern: [],
-    maxLength: maxLength,
-    patternLength: 1,
-    attempts: 0,
-    speed: 1
-  }
+  this.game = this.newGame();
   this.displayInfo();
 };
 Game.prototype.displayInfo = function(action) {
