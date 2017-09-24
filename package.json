@@ -1,0 +1,22 @@
+{
+  "name": "simon-game",
+  "version": "1.0.0",
+  "description": "The classic memory game, built for the FCC front end certification",
+  "main": "App.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alightedlamp/simon-game.git"
+  },
+  "author": "Philip Harrell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alightedlamp/simon-game/issues"
+  },
+  "homepage": "https://github.com/alightedlamp/simon-game#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

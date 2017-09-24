@@ -1,5 +1,6 @@
 .DS_Store
 */DS_Store
 /css/styles.css.map
-.scss_cache
+.sass-cache/
+node_modules
 .git

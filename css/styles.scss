@@ -1,7 +1,7 @@
-$red: red;
-$green: green;
-$blue: blue;
-$yellow: yellow;
+$red: #ff2626;
+$blue: #1943ff;
+$green: #2a912b;
+$yellow: #ffe419;
 
 * {
   box-sizing: border-box;
@@ -21,6 +21,7 @@ div.app {
   width: 400px;
 }
 div.grid {
+  margin: 0 0 3em 0;
   display: flex;
   flex-wrap: wrap;
   box-shadow: 7px 7px 0 #ccc;
@@ -53,6 +54,7 @@ div.instructions {
 }
 div.controls {
   display: flex;
+  justify-content: space-between;
   margin: 1.5em 0 3em 0;
   background-color: white;
   box-shadow: 4px 4px 0 #eee;
@@ -66,7 +68,21 @@ div.controls button {
   background-color: #eee;
 }
 div.controls button:hover {
-  background-color: #999;
+  background-color: white;
   transition: .2s;
-  color: white;
+  color: black;
+  box-shadow: 3px 3px 0 #999;
+  border: 1px solid #bbb;
+}
+div.strict {
+  display: flex;
+}
+div#indicator {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin: 2.8em 1.25em 0 0;
+  border: 1px solid #999;
+  // box-shadow: 1px 1px 0 #eee;
+  // background-color: red;
 }
