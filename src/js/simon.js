@@ -124,6 +124,7 @@ Game.prototype.displayInfo = function(action) {
   switch (action) {
     case ('INIT'):
       infoBar.innerHTML = 'Press start below, and pay close attention! Especially as the game speeds up.';
+      break;
     case ('START'):
       infoBar.innerHTML = 'Starting game';
       break;
