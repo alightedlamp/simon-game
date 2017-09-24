@@ -5,6 +5,7 @@ let strict = false;
 let gameOn = false;
 let maxLength = 20;
 
+const stepDisplay = document.querySelector("#display");
 const infoBar = document.querySelector("#info");
 infoBar.innerHTML = 'Press start below, and pay close attention! Especially as the game speeds up.';
 
@@ -13,22 +14,24 @@ const blue = document.querySelector("#blue");
 const green = document.querySelector("#green");
 const yellow = document.querySelector("#yellow");
 const grid = [
-  {cell: 0, color: 'red', baseColor: '#ff2626', highlightColor: '#fc5555', el: red},
-  {cell: 1, color: 'blue', baseColor: '#1943ff', highlightColor: '#728cff', el: blue},
-  {cell: 2, color: 'green', baseColor: '#2a912b', highlightColor: '#49fc4a', el: green},
-  {cell: 3, color: 'yellow', baseColor: '#ffe419', highlightColor: '#ffed6b', el: yellow}
+  {cell: 0, color: 'red', baseColor: '#841313', highlightColor: '#e01818', el: red},
+  {cell: 1, color: 'blue', baseColor: '#1d1d8c', highlightColor: '#005dff', el: blue},
+  {cell: 2, color: 'green', baseColor: '#2a912b', highlightColor: '#23dd16', el: green},
+  {cell: 3, color: 'yellow', baseColor: '#d3a202', highlightColor: '#ffe100', el: yellow}
 ];
 
+const defaultGame = {
+  strict: strict,
+  currentPattern: [],
+  selectedPattern: [],
+  maxLength: maxLength,
+  patternLength: 1,
+  attempts: 0,
+  speed: 1
+}
+
 const Game = function() {
-  this.game = {
-    strict: strict,
-    currentPattern: [],
-    selectedPattern: [],
-    maxLength: maxLength,
-    patternLength: 1,
-    attempts: 0,
-    speed: 1
-  };
+  this.game = {...defaultGame};
 };
 Game.prototype.incrementPattern = function(){
   this.game.patternLength += 1;
@@ -40,13 +43,14 @@ Game.prototype.addToPattern = function(length) {
 Game.prototype.displayPattern = function(pattern) {
   console.log(`Displaying: ${pattern}`);
   setTimeout(() => {
+    this.displayInfo();
     let idx = 0;
 
     const highlight = (cell) => {
       cell.el.style.backgroundColor = cell.highlightColor;
       setTimeout(() => {
         cell.el.style.backgroundColor = cell.baseColor;
-      }, 1000 / this.game.speed);
+      }, 500 / this.game.speed);
     };
 
     const next = () => {
@@ -62,12 +66,12 @@ Game.prototype.displayPattern = function(pattern) {
         return;
       }
       next();
-    }.bind(this), 1500 / this.game.speed);
-  }, 1000);
+    }.bind(this), 1000 / this.game.speed);
+  }, 750);
 };
 Game.prototype.resetTurn = function(){
   this.game.selectedPattern = [];
-  this.game.patternLength += 1;
+  this.incrementPattern();
 };
 Game.prototype.takeTurn = function() {
   this.addToPattern(this.game.patternLength);
@@ -85,74 +89,43 @@ Game.prototype.checkAnswer = function() {
   }).length === this.game.currentPattern.length;
 
   if (!winner && this.game.attempts !== 3) {
+    this.displayInfo('MISS');
+
     if (strict) {
       this.takeTurn();
     }
     else {
-      this.displayInfo('WRONG_STRICT');
       this.game.attempts += 1;
       this.resetTurn();
       this.displayPattern(this.game.currentPattern);
     }
   }
   else if (!winner && this.game.attempts === 3) {
-    this.displayInfo('GAMEOVER_MAX');
     this.reset();
   }
   else if (winner && this.game.currentPattern === this.game.maxLength) {
-    this.displayInfo('WIN');
+    this.displayInfo();
+    console.log('You win!');
   }
   else {
-    this.displayInfo('NEW_PATTERN');
+    this.displayInfo();
     this.resetTurn();
     this.takeTurn();
   }
 };
 Game.prototype.start = function() {
-  this.displayInfo('START');
-  this.game.started = true;
   this.takeTurn();
 };
 Game.prototype.reset = function() {
-  this.displayInfo('RESET');
-  this.game.started = false;
-};
-Game.prototype.clearInfo = function() {
-  infoBar.innerHTML = '';
+  this.game = {...defaultGame};
 };
 Game.prototype.displayInfo = function(action) {
-  switch (action) {
-    case ('INIT'):
-      infoBar.innerHTML = 'Press start below, and pay close attention! Especially as the game speeds up.';
-      break;
-    case ('START'):
-      infoBar.innerHTML = 'Starting game';
-      break;
-    case ('RESET'):
-      infoBar.innerHTML = 'Restting game';
-      break;
-    case ('NEW_PATTERN'):
-      infoBar.innerHTML = 'Good job! Making a new pattern.';
-      break;
-    case ('WRONG_STRICT'):
-      infoBar.innerHTML = 'Wrong! Displaying pattern again.';
-      break;
-    case ('GAMEOVER_MAX'):
-      infoBar.innerHTML = 'Sorry, out of attempts! Play again?';
-      break;
-    case ('WIN'):
-      infoBar.innerHTML = 'You win!';
-      break;
-    default:
-      break;
-  }
-};
-Game.prototype.toggleStrict = function(game) {
-  this.game.settings.strict = true;
+  const steps = this.game.currentPattern.length;
+  stepDisplay.value = action === 'MISS' ? '!!' : steps;
 };
 
 const resetText = 'Reset';
-const startText = 'Let\'s go!';
+const startText = 'Start!';
 const newGameBtn = document.querySelector("#newGame");
 const toggleStrictBtn = document.querySelector("#toggleStrict");
 const indicator = document.querySelector("#indicator");
@@ -174,5 +147,7 @@ toggleStrictBtn.addEventListener('click', () => {
 });
 
 for (let i = 0; i < grid.length; i++) {
-  grid[i].el.addEventListener('click', (e) => currentGame.addUserSelection(e));
+  grid[i].el.addEventListener('click', (e) => {
+    currentGame.addUserSelection(e)
+  });
 }
