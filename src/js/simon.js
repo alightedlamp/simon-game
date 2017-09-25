@@ -6,8 +6,6 @@ let gameOn = false;
 let maxLength = 20;
 
 const stepDisplay = document.querySelector("#display");
-const infoBar = document.querySelector("#info");
-infoBar.innerHTML = 'Press start below, and pay close attention! Especially as the game speeds up.';
 
 const red = document.querySelector("#red");
 const blue = document.querySelector("#blue");
@@ -31,7 +29,6 @@ Game.prototype.addToPattern = function(length) {
   this.game.currentPattern.push(cellIdx);
 };
 Game.prototype.displayPattern = function(pattern) {
-  console.log(`Displaying: ${pattern}`);
   setTimeout(() => {
     this.displayInfo();
     let idx = 0;
