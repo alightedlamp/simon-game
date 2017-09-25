@@ -28,6 +28,11 @@ gulp.task('copy-html', function() {
     .pipe(gulp.dest('public/'));
 });
 
+gulp.task('copy-audio', function() {
+  return gulp.src('src/audio/**')
+    .pipe(gulp.dest('public/assets/audio'));
+});
+
 gulp.task('build-css', function() {
   return gulp.src(config.sassPattern)
     .pipe(sourcemaps.init())
@@ -53,9 +58,10 @@ gulp.task('watch', function() {
   gulp.watch(config.jsPattern, ['jshint', 'build-js']);
   gulp.watch(config.sassPattern, ['build-css']);
   gulp.watch('src/*.html', ['copy-html']);
+  gulp.watch('src/audio/*', ['copy-audio']);
 });
 
-gulp.task('deploy', ['copy-html', 'build-css', 'build-js'], function() {
+gulp.task('deploy', ['copy-html', 'copy-audio', 'build-css', 'build-js'], function() {
   return gulp.src('./public/**/*')
     .pipe(ghPages());
 });

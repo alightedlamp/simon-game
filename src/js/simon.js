@@ -5,6 +5,8 @@ let strict = false;
 let gameOn = false;
 let maxLength = 20;
 
+const soundsURL = '/assets/audio';
+
 const stepDisplay = document.querySelector("#display");
 
 const red = document.querySelector("#red");
@@ -12,10 +14,38 @@ const blue = document.querySelector("#blue");
 const green = document.querySelector("#green");
 const yellow = document.querySelector("#yellow");
 const grid = [
-  {cell: 0, color: 'red', baseColor: '#841313', highlightColor: '#e01818', el: red},
-  {cell: 1, color: 'blue', baseColor: '#1d1d8c', highlightColor: '#005dff', el: blue},
-  {cell: 2, color: 'green', baseColor: '#2a912b', highlightColor: '#23dd16', el: green},
-  {cell: 3, color: 'yellow', baseColor: '#d3a202', highlightColor: '#ffe100', el: yellow}
+  {
+    cell: 0,
+    color: 'red',
+    baseColor: '#841313',
+    highlightColor: '#e01818',
+    el: red,
+    sound: `${soundsURL}/simon1.mp3`
+  },
+  {
+    cell: 1,
+    color: 'blue',
+    baseColor: '#1d1d8c',
+    highlightColor: '#005dff',
+    el: blue,
+    sound: `${soundsURL}/simon2.mp3`
+  },
+  {
+    cell: 2,
+    color: 'green',
+    baseColor: '#2a912b',
+    highlightColor: '#23dd16',
+    el: green,
+    sound: `${soundsURL}/simon3.mp3`
+  },
+  {
+    cell: 3,
+    color: 'yellow',
+    baseColor: '#d3a202',
+    highlightColor: '#ffe100',
+    el: yellow,
+    sound: `${soundsURL}/simon4.mp3`
+  }
 ];
 
 const Game = function() {
@@ -34,6 +64,9 @@ Game.prototype.displayPattern = function(pattern) {
     let idx = 0;
 
     const highlight = (cell) => {
+      const audio = new Audio(cell.sound);
+      audio.play();
+      
       cell.el.style.backgroundColor = cell.highlightColor;
       setTimeout(() => {
         cell.el.style.backgroundColor = cell.baseColor;
@@ -147,7 +180,11 @@ toggleStrictBtn.addEventListener('click', () => {
 });
 
 for (let i = 0; i < grid.length; i++) {
-  grid[i].el.addEventListener('click', (e) => currentGame.addUserSelection(e));
+  grid[i].el.addEventListener('click', (e) => {
+    currentGame.addUserSelection(e);
+    const audio = new Audio(grid[i].sound);
+    audio.play();
+  });
   grid[i].el.addEventListener('mousedown', (e) => e.target.style.backgroundColor = grid[i].highlightColor);
   grid[i].el.addEventListener('mouseup', (e) => e.target.style.backgroundColor = grid[i].baseColor);
 }
