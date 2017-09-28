@@ -5,9 +5,9 @@ let strict = false;
 let gameOn = false;
 let maxLength = 20;
 
-const soundsURL = '/assets/audio';
-
 const stepDisplay = document.querySelector("#display");
+
+const soundsURL = '/assets/audio';
 
 const red = document.querySelector("#red");
 const blue = document.querySelector("#blue");
@@ -66,7 +66,7 @@ Game.prototype.displayPattern = function(pattern) {
     const highlight = (cell) => {
       const audio = new Audio(cell.sound);
       audio.play();
-      
+
       cell.el.style.backgroundColor = cell.highlightColor;
       setTimeout(() => {
         cell.el.style.backgroundColor = cell.baseColor;
@@ -104,9 +104,7 @@ Game.prototype.addUserSelection = function(e) {
   }
 };
 Game.prototype.checkAnswer = function() {
-  const winner = this.game.selectedPattern.filter((color, i) => {
-    return color === grid[this.game.currentPattern[i]].color;
-  }).length === this.game.currentPattern.length;
+  const winner = this.game.selectedPattern.every((color, i) => color === grid[this.game.currentPattern[i]].color);
 
   if (!winner && this.game.attempts !== 3) {
     this.displayInfo('MISS');
@@ -142,7 +140,7 @@ Game.prototype.newGame = function() {
     patternLength: 1,
     attempts: 0,
     speed: 1
-  }
+  };
 };
 Game.prototype.start = function() {
   this.newGame();
@@ -180,11 +178,11 @@ toggleStrictBtn.addEventListener('click', () => {
 });
 
 for (let i = 0; i < grid.length; i++) {
-  grid[i].el.addEventListener('click', (e) => {
-    currentGame.addUserSelection(e);
+  grid[i].el.addEventListener('click', (e) => currentGame.addUserSelection(e));
+  grid[i].el.addEventListener('mousedown', (e) => {
+    e.target.style.backgroundColor = grid[i].highlightColor
     const audio = new Audio(grid[i].sound);
     audio.play();
   });
-  grid[i].el.addEventListener('mousedown', (e) => e.target.style.backgroundColor = grid[i].highlightColor);
   grid[i].el.addEventListener('mouseup', (e) => e.target.style.backgroundColor = grid[i].baseColor);
 }
